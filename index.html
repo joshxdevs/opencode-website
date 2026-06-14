@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opencode — AI Coding Agent for your Terminal</title>
+    <meta name="description" content="Opencode is a specialized, agentic CLI tool that integrates LLMs directly into your local development workflow. Provider abstraction, secure local storage, and autonomous agentic loops." />
+    <meta property="og:title" content="Opencode — AI Coding Agent for your Terminal" />
+    <meta property="og:description" content="Integrate LLMs directly into your local development workflow." />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <nav id="nav">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo" id="nav-logo">opencode</a>
+        <div class="nav-links">
+          <a href="#features" class="nav-link" id="nav-features">Features</a>
+          <a href="#install" class="nav-link" id="nav-install">Install</a>
+          <a href="#usage" class="nav-link" id="nav-usage">Usage</a>
+          <a href="https://github.com/joshxdevs/opencode" target="_blank" rel="noopener" class="nav-link nav-github" id="nav-github">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <a href="https://www.npmjs.com/package/@joshxdevs/opencode" target="_blank" rel="noopener" class="nav-cta" id="nav-npm">npm</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-inner">
+        <div class="hero-badge reveal">
+          <span class="badge-dot"></span>
+          <span>v0.1.4 · Now on npm</span>
+        </div>
+        <h1 class="hero-headline reveal">
+          Your terminal.<br />
+          <span class="gradient-text">Now thinks.</span>
+        </h1>
+        <p class="hero-sub reveal">
+          Opencode is an agentic CLI that integrates LLMs directly into your local development workflow —
+          with provider abstraction, secure credential storage, and autonomous tool-calling loops.
+        </p>
+
+        <div class="hero-install reveal" id="install-cmd">
+          <span class="install-prefix">$</span>
+          <span class="install-text" id="install-text">npm install -g @joshxdevs/opencode</span>
+          <button class="copy-btn" id="copy-install-btn" aria-label="Copy install command" title="Copy">
+            <svg id="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <svg id="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Terminal -->
+        <div class="terminal reveal" id="terminal-window" aria-label="Terminal demo">
+          <div class="terminal-bar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="terminal-title">opencode — zsh</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line">
+              <span class="prompt">~</span>
+              <span class="cmd" id="typed-cmd"></span>
+              <span class="cursor" id="cursor">|</span>
+            </div>
+            <div class="terminal-output" id="terminal-output"></div>
+          </div>
+        </div>
+
+        <div class="hero-scroll-hint reveal">
+          <span>scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+      <div class="section-inner">
+        <div class="section-label reveal">Features</div>
+        <h2 class="section-headline reveal">Built for developers<br />who want to move fast.</h2>
+        <p class="section-sub reveal">Every detail is designed to get out of your way and let the AI do the work.</p>
+
+        <div class="features-grid">
+          <div class="feature-item reveal" id="feature-provider">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            </div>
+            <h3>Provider Abstraction</h3>
+            <p>Plug in any AI provider — Google, OpenAI, Anthropic and more. Switch models without changing your workflow.</p>
+          </div>
+
+          <div class="feature-item reveal" id="feature-storage">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+            <h3>Local Secure Storage</h3>
+            <p>API credentials live in <code>~/.opencode/</code> with strict <code>0600</code> permissions. Your keys never leave your machine.</p>
+          </div>
+
+          <div class="feature-item reveal" id="feature-models">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <h3>Model Discovery</h3>
+            <p>Connects to <code>models.dev</code> to fetch, filter, and cache remote model schemas, context limits, and tool-call capabilities.</p>
+          </div>
+
+          <div class="feature-item reveal" id="feature-loop">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </div>
+            <h3>Agentic Loop</h3>
+            <p>Out-of-the-box tool-calling framework with <code>list_files</code>, <code>read_file</code>, and <code>run_command</code>. The LLM autonomously inspects and acts on your workspace.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works">
+      <div class="section-inner">
+        <div class="section-label reveal">Architecture</div>
+        <h2 class="section-headline reveal">Three layers.<br />One seamless loop.</h2>
+        <p class="section-sub reveal">A clean separation of concerns that keeps the codebase modular and extensible.</p>
+
+        <div class="arch-stack">
+          <div class="arch-layer reveal" id="arch-cli">
+            <div class="arch-layer-num">01</div>
+            <div class="arch-layer-content">
+              <h3>CLI Routing <span class="arch-tag">commands/</span></h3>
+              <p>Parses arguments and flags via Commander.js. The entry point for every user interaction — clean, declarative, and extensible.</p>
+            </div>
+          </div>
+          <div class="arch-connector reveal"></div>
+          <div class="arch-layer reveal" id="arch-core">
+            <div class="arch-layer-num">02</div>
+            <div class="arch-layer-content">
+              <h3>Core Library <span class="arch-tag">lib/</span></h3>
+              <p>Handles all business logic — secure credential management, network caching, model discovery, and the agent execution loop.</p>
+            </div>
+          </div>
+          <div class="arch-connector reveal"></div>
+          <div class="arch-layer reveal" id="arch-ui">
+            <div class="arch-layer-num">03</div>
+            <div class="arch-layer-content">
+              <h3>Presentation <span class="arch-tag">ui/</span></h3>
+              <p>Abstracts terminal styling and standardizes all stdout/stderr formatting. Keeps output consistent across every command.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTALL -->
+    <section id="install">
+      <div class="section-inner">
+        <div class="section-label reveal">Installation</div>
+        <h2 class="section-headline reveal">Up and running<br />in 60 seconds.</h2>
+
+        <div class="steps">
+          <div class="step reveal" id="step-1">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3>Install globally</h3>
+              <p>Requires Node.js 18+ installed on your system.</p>
+              <div class="code-block" id="code-install">
+                <code>npm install -g @joshxdevs/opencode</code>
+                <button class="copy-btn-sm" data-copy="npm install -g @joshxdevs/opencode" aria-label="Copy">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step reveal" id="step-2">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3>Add your API key</h3>
+              <p>Securely store your provider credentials. Keys are saved locally with strict file permissions.</p>
+              <div class="code-block" id="code-login">
+                <code>opencode providers login --provider google --api_key YOUR_KEY</code>
+                <button class="copy-btn-sm" data-copy="opencode providers login --provider google --api_key YOUR_KEY" aria-label="Copy">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step reveal" id="step-3">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3>Set your model</h3>
+              <p>Browse available models and set your default for agent execution.</p>
+              <div class="code-block" id="code-model">
+                <code>opencode model set google/gemini-2.5-flash</code>
+                <button class="copy-btn-sm" data-copy="opencode model set google/gemini-2.5-flash" aria-label="Copy">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step reveal" id="step-4">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h3>Run the agent</h3>
+              <p>Point it at any directory. The agent reads your filesystem, runs commands, and reports back.</p>
+              <div class="code-block" id="code-agent">
+                <code>opencode agent -p "Analyze this codebase and summarize it."</code>
+                <button class="copy-btn-sm" data-copy='opencode agent -p "Analyze this codebase and summarize it."' aria-label="Copy">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- USAGE -->
+    <section id="usage">
+      <div class="section-inner">
+        <div class="section-label reveal">Usage</div>
+        <h2 class="section-headline reveal">Every command,<br />exactly where you need it.</h2>
+
+        <div class="usage-grid">
+          <div class="usage-card reveal" id="usage-providers">
+            <div class="usage-card-label">Providers</div>
+            <pre class="usage-pre"><span class="c-muted"># Login a provider</span>
+opencode providers login \
+  --provider google \
+  --api_key YOUR_KEY
+
+<span class="c-muted"># List active providers</span>
+opencode providers list
+
+<span class="c-muted"># Remove a provider</span>
+opencode providers logout \
+  --provider google</pre>
+          </div>
+
+          <div class="usage-card reveal" id="usage-models">
+            <div class="usage-card-label">Models</div>
+            <pre class="usage-pre"><span class="c-muted"># List all available models</span>
+opencode models
+
+<span class="c-muted"># Filter by provider</span>
+opencode models --provider google
+
+<span class="c-muted"># Force refresh cache</span>
+opencode models --refresh
+
+<span class="c-muted"># Set active model</span>
+opencode model set google/gemini-2.5-flash</pre>
+          </div>
+
+          <div class="usage-card reveal" id="usage-agent">
+            <div class="usage-card-label">Agent</div>
+            <pre class="usage-pre"><span class="c-muted"># Run a prompt</span>
+opencode agent -p "List all files"
+
+<span class="c-muted"># Analyze a directory</span>
+opencode agent -p \
+  "Summarize this codebase"
+
+<span class="c-muted"># Debug a project</span>
+opencode agent -p \
+  "Find bugs in the src folder"</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta">
+      <div class="section-inner">
+        <h2 class="cta-headline reveal">Start building<br />with AI in your terminal.</h2>
+        <div class="cta-install reveal">
+          <span class="install-prefix">$</span>
+          <span>npm install -g @joshxdevs/opencode</span>
+        </div>
+        <div class="cta-links reveal">
+          <a href="https://github.com/joshxdevs/opencode" target="_blank" rel="noopener" class="cta-link-btn" id="cta-github">View on GitHub</a>
+          <a href="https://www.npmjs.com/package/@joshxdevs/opencode" target="_blank" rel="noopener" class="cta-link-ghost" id="cta-npm">npm package</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+      <div class="footer-inner">
+        <span class="footer-logo">opencode</span>
+        <span class="footer-meta">MIT License · by <a href="https://github.com/joshxdevs" target="_blank" rel="noopener">joshxdevs</a></span>
+        <span class="footer-version">v0.1.4</span>
+      </div>
+    </footer>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
